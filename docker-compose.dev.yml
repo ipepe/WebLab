@@ -1,0 +1,11 @@
+version: '2'
+services:
+  app:
+    build: .
+    restart: always
+    ports:
+      - '8080:80'
+    volumes:
+      - './data:/app/data'
+
+# docker-compose -f docker-compose.dev.yml up --build
