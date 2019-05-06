@@ -1,17 +1,23 @@
-FROM ruby:2.3
+FROM phusion/passenger-ruby23
 MAINTAINER docker@ipepe.pl
 
-RUN apt-get update && apt-get install -y locales && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
-RUN echo 'LANG="en_US.UTF-8"' > /etc/default/locale
-RUN echo 'LANGUAGE="en_US:en"' >> /etc/default/locale
+ENV PASSENGER_APP_ENV=production
 
-WORKDIR /app
+RUN rm -f /etc/service/nginx/down
 
-ENV APP_ENV=production
-RUN gem install bundler
-COPY app /app
-RUN bundle install -j 3 --deployment
+WORKDIR /home/app
 
-EXPOSE 80 22
+COPY --chown=app:app app/weblab-public /home/app/weblab-public
+COPY --chown=app:app app/weblab-api /home/app/weblab-api
 
-CMD [ "bundle", "exec", "ruby", "index.rb", "-p 80"]
+USER app
+RUN mkdir -p /home/app/weblab-api/public /home/app/weblab-api/tmp \
+             /home/app/weblab-public/public /home/app/weblab-public/tmp
+RUN cd weblab-public && bundle install -j 3 --deployment
+RUN cd weblab-api && bundle install -j 3 --deployment
+
+USER root
+RUN rm /etc/nginx/sites-enabled/default
+ADD app/nginx-configs/ /etc/nginx/sites-enabled/
+
+EXPOSE 80 8080
