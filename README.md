@@ -12,6 +12,5 @@ WebLab is Your companion that focuses on serving static websites from zip archiv
 # stage 1 - done
 create weblab-public that responds with domain name in html to test with traefix and letsencrypt
 
-# stage 2 - wip
-create weblab-api that accepts zip files, checks if there is proper CNAME file inside zip, and puts it for weblab-public and restarts weblab-public
-
+# stage 2 - done
+create weblab-api that accepts zip files and puts it for weblab-public and restarts weblab-public

@@ -3,5 +3,5 @@ source 'https://rubygems.org' do
   gem 'activesupport'
   # gem 'rubyzip' # https://github.com/rubyzip/rubyzip
   # gem 'mimemagic'
-  # gem 'pry' # for debug
+  gem 'pry' # for debug
 end

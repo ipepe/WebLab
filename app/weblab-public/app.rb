@@ -4,6 +4,8 @@ require 'zip'
 require 'mimemagic'
 require 'pry' if ENV['RAILS_ENV'] != 'production'
 
+WEBSITES_DATA_DIR = '/home/app/data/websites'
+
 Zip.unicode_names = true
 Zip.warn_invalid_date = false
 Zip.force_entry_names_encoding = 'UTF-8'
@@ -18,10 +20,10 @@ def detect_content_type(io, filename)
   end || MimeMagic.by_magic(io)
 end
 
-Dir.glob(ENV.fetch('WEBSITES_PATH', '../data/websites')+'/*.zip') do |zip_file_path|
+Dir.glob(WEBSITES_DATA_DIR+'/*.zip') do |zip_file_path|
   zip_file = Zip::File.open(zip_file_path)
   cname_file = zip_file.glob('**/CNAME')[0]
-  if cname_file.present?
+  if cname_file
     domains = cname_file.get_input_stream.read.split("\n")
     root_path = cname_file.name[0..-6]
     domains.each do |domain|
