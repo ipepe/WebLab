@@ -1,4 +1,4 @@
-# WebLab
+# WebLab - Work in Progress
 WebLab is Your companion that focuses on serving static websites from zip archive files on the fly.
 
 It uses two Sinatra servers, one for administration, and second for serving files. On admin You upload zip file and specify domain. When upload finishes, administrative service will restart public facing service with new configuration that includes Your new file.
