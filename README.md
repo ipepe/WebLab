@@ -1,4 +1,4 @@
-# weblab
+# WebLab
 WebLab is Your companion that focuses on serving static websites from zip archive files on the fly.
 
 # todo:
